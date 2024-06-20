@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:32:49 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/20 12:12:41 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/20 12:17:35 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int	not_digit(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 	{
@@ -43,9 +43,10 @@ static int	ft_nbr_check(char **arr)
 	return (0);
 }
 
-/*Checks if first 4 numbers given to program are smaller or equal 0. Additional checks, if
-  max. amount of philosophers (200) is exceeded by first argument given. In case the optional
-  5th number is given to program, it is checked, whether this number is smaller than 0.*/
+/*Checks if first 4 numbers given to program are smaller or equal 0. 
+  Additional checks, if max. amount of philosophers (200) is exceeded 
+  by first argument given. In case the optional 5th number is given to 
+  program, it is checked, whether this number is smaller than 0.*/
 static int	check_valid_nbr(int ac, char **arr)
 {
 	int	nbr1;
@@ -69,7 +70,6 @@ static int	check_valid_nbr(int ac, char **arr)
 		if (nbr5 < 0)
 			return (1);
 	}
-	// printf("%d\n", nbr1);
 	return (0);
 }
 
