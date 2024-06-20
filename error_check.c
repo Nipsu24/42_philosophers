@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 10:32:49 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/20 11:29:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/20 12:12:41 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_nbr_check(char **arr)
 {
 	int	j;
 
-	j = 0;
+	j = 1;
 	while (arr[j])
 	{
 		if (not_digit(arr[j]))
@@ -69,6 +69,7 @@ static int	check_valid_nbr(int ac, char **arr)
 		if (nbr5 < 0)
 			return (1);
 	}
+	// printf("%d\n", nbr1);
 	return (0);
 }
 
@@ -88,7 +89,7 @@ int	ft_input_error_msg(int err_no)
 {
 	if (err_no == 0)
 	{
-		printf("Error.\nInsufficient amount of arguments.\n");
+		printf("Error.\nIncorrect amount of arguments.\n");
 		return (1);
 	}
 	if (err_no == 1)
