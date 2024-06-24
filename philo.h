@@ -16,11 +16,24 @@
 # include <stdio.h>
 # include <pthread.h>
 
-/*Struct containing command structure extracted from tokens*/
-// typedef struct s_command
-// {
-// 	char				*cnt;
-// }				t_command;
+# define PHILO_MAX 250
+/*Struct containing all relevant data of a philosopher*/
+typedef struct s_philo
+{
+	pthread_t		thread;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t *r_fork;
+	int				id;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				time_to_die;
+	int				last_time_eaten;
+}				t_philo;
+
+typedef struct s_table
+{
+	t_philo		philos;
+}				t_table;
 
 int	ft_isdigit(int n);
 int	ft_atoi(const char *str);
