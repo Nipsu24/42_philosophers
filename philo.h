@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 # define PHILO_MAX 250
 /*Struct containing all relevant data of a philosopher*/
@@ -24,20 +25,24 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t *r_fork;
 	int				id;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				time_to_die;
 	int				last_time_eaten;
 }				t_philo;
 
 typedef struct s_table
 {
-	t_philo		philos;
+	int		nbr_of_philos;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		meals_to_eat;
+	t_philo	*philos;
 }				t_table;
 
-int	ft_isdigit(int n);
-int	ft_atoi(const char *str);
-int	ft_input_error_msg(int err_no);
-int	ft_input_check(int ac, char **arr);
+int		ft_isdigit(int n);
+int		ft_atoi(const char *str);
+int		ft_input_error_msg(int err_no);
+int		ft_input_check(int ac, char **arr);
+void	init_table(t_table *table, char **av);
+void	init_philo(t_philo *philo, char **av);
 
 #endif

@@ -14,8 +14,8 @@
 
 int	main(int ac, char *av[])
 {
-	t_philo	philos[PHILO_MAX];
-	t_table;
+	t_philo			philos[PHILO_MAX];
+	t_table			table;
 	pthread_mutex_t forks[PHILO_MAX];
 	
 	if (ac < 5 || ac > 6)
@@ -23,5 +23,7 @@ int	main(int ac, char *av[])
 	if (ft_input_check(ac, av))
 		return (ft_input_error_msg(1));
 	printf("Correct Input received\n");
+	init_table(&table, av);
+	init_philo(&philos, av);
 	return (0);
 }
