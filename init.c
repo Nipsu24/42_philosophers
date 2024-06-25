@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mariusmeier <marvin@42.fr>                 +#+  +:+       +#+        */
+/*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:21:37 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/06/24 12:21:40 by mariusmeier      ###   ########.fr       */
+/*   Updated: 2024/06/25 14:18:18 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_table(t_table *table, char **av)
+static void	init_table(t_table *table, char **av)
 {
 	{
 		table->nbr_of_philos = ft_atoi(av[1]);
@@ -23,17 +23,55 @@ void	init_table(t_table *table, char **av)
 			table->meals_to_eat = ft_atoi(av[5]);
 		else
 			table->meals_to_eat = -1;
+		table->start_sim = get_time();
 	}
+	printf("nbr of philos: %d\n", table->nbr_of_philos);
+	printf("time_to_die: %d\n", table->time_to_die);
+	printf("time_to_eat: %d\n", table->time_to_eat);
+	printf("time_to_sleep: %d\n", table->time_to_sleep);
+	printf("meals_to eat: %d\n", table->meals_to_eat);
+	printf("start_sim: %zu\n", table->start_sim);
 }
-void	init_philo(t_philo *philo, char **av)
+
+/*Initialises pthread_mutex_t for each element 'i' in the forks array. Therefore
+  address of each i (&forks[i]) need to be passed to init function and not only 
+  forks[i]*/
+static void	init_forks(pthread_mutex_t *forks, t_table *table)
 {
 	int	i;
 
 	i = 0;
-	while (i < ft_atoi(av[1]))
+	while (i < table->nbr_of_philos)
 	{
-		philo->id = i + 1;
-		philo->last_time_eaten = 0;
+		pthread_mutex_init(&forks[i], NULL);
 		i++;
 	}
+}
+
+static void	init_philo(t_philo *philo, t_table *table, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nbr_of_philos)
+	{
+		philo[i].id = i + 1;
+		philo[i].last_time_eaten = 0;
+		philo[i].l_fork = &forks[i];
+		if (i == 0)
+			philo[i].r_fork = &forks[table->nbr_of_philos - 1];
+		else
+			philo[i].r_fork = &forks[i - 1];
+		printf("philo ID: %d\n", philo[i].id);
+		printf("last_time_eaten: %d\n", philo[i].last_time_eaten);
+		i++;
+	}
+}
+
+void	init_structs(t_table *table, t_philo *philos,
+						pthread_mutex_t *forks, char **av)
+{
+	init_table(table, av);
+	init_forks(forks, table);
+	init_philo(philos, table, forks);
 }

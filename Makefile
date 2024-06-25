@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/06/20 11:29:10 by mmeier           ###   ########.fr        #
+#    Updated: 2024/06/25 14:25:24 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS = -pthread
 SRC_DIR = ./
 OBJ_DIR = obj
 
-FILES = main.c utils.c error_check.c
+FILES = main.c utils.c error_check.c init.c threads.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -29,7 +29,7 @@ $(NAME): $(OBJ_FILES)
 	@echo "\033[32m philo has been built successfully!\033[0m"
 
 fsanitize: 
-	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -g -fsanitize=address -static-libsan 
+	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -g -fsanitize=address -static-libasan 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)philo.h | $(OBJ_DIR) 
 	$(CC) $(FLAGS) -c $< -o $@

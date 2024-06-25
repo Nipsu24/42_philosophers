@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:58:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/20 10:30:04 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/25 11:20:35 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,12 @@ int	ft_atoi(const char *str)
 	if (minus == 1)
 		return (-number);
 	return (number);
+}
+
+size_t	get_time(void)
+{
+	struct timeval time;
+	
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000 + time.tv_usec / 1000));
 }

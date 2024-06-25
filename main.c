@@ -6,12 +6,14 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:58:42 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/20 12:03:44 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:24:16 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*philos and forks are decaying automatically to pthread_mutex_t* when
+  passing them as arguments to functions*/
 int	main(int ac, char *av[])
 {
 	t_philo			philos[PHILO_MAX];
@@ -23,7 +25,7 @@ int	main(int ac, char *av[])
 	if (ft_input_check(ac, av))
 		return (ft_input_error_msg(1));
 	printf("Correct Input received\n");
-	init_table(&table, av);
-	init_philo(&philos, av);
+	init_structs(&table, philos, forks, av);
+	thread_create(philos, &table);
 	return (0);
 }

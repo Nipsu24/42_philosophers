@@ -32,19 +32,19 @@ int	main(void)
 	printf("%zu", i);
 	return (0);
 	
-	// pthread_t		t1;
-	// pthread_t		t2;
-	// pthread_mutex_t	mutex;
+	pthread_t		t1;
+	pthread_t		t2;
+	pthread_mutex_t	mutex;
 
-	// pthread_mutex_init(&mutex, NULL);
-	// if (pthread_create(&t1, NULL, &routine, &mutex) != 0)
-	// 	return (1);
-	// if (pthread_create(&t2, NULL, &routine, &mutex) != 0)
-	// 	return (1);
-	// if (pthread_join(t1, NULL) != 0) // waits for thread to be executed
-	// 	return (1);
-	// if (pthread_join(t2, NULL) != 0) // waits for thread to be executed
-	// 	return (1);
-	// pthread_mutex_destroy(&mutex);
-	// return (0);
+	pthread_mutex_init(&mutex, NULL);
+	if (pthread_create(&t1, NULL, &routine, &mutex) != 0)
+		return (1);
+	if (pthread_create(&t2, NULL, &routine, &mutex) != 0)
+		return (1);
+	if (pthread_join(t1, NULL) != 0) // waits for thread to be executed
+		return (1);
+	if (pthread_join(t2, NULL) != 0) // waits for thread to be executed
+		return (1);
+	pthread_mutex_destroy(&mutex);
+	return (0);
 }
