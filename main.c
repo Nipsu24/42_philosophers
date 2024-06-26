@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:58:42 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/25 14:24:16 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/26 12:13:15 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(int ac, char *av[])
 		return (ft_input_error_msg(1));
 	printf("Correct Input received\n");
 	init_structs(&table, philos, forks, av);
-	thread_create(philos, &table);
+	init_threads(philos, &table);
 	return (0);
 }

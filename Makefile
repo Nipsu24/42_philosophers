@@ -6,7 +6,7 @@
 #    By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 11:47:56 by mmeier            #+#    #+#              #
-#    Updated: 2024/06/25 14:25:24 by mmeier           ###   ########.fr        #
+#    Updated: 2024/06/26 14:59:01 by mmeier           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS = -pthread
 SRC_DIR = ./
 OBJ_DIR = obj
 
-FILES = main.c utils.c error_check.c init.c threads.c
+FILES = main.c utils.c error_check.c init.c threads.c control_routine.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 

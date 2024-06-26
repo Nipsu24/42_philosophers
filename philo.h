@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/25 16:28:45 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:57:44 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	int				id;
-	int				last_time_eaten;
+	int				eating;
+	int				meals_eaten;
+	int				*dead;
+	size_t			last_time_eaten;
+	struct s_table	*table;
 }				t_philo;
 
 /*Struct containing all relevant data of the table (shared data of philos)*/
@@ -37,6 +41,7 @@ typedef struct s_table
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		meals_to_eat;
+	int		dead_flag;
 	size_t	start_sim;
 	t_philo	*philos;
 }				t_table;
@@ -47,7 +52,8 @@ int		ft_input_error_msg(int err_no);
 int		ft_input_check(int ac, char **arr);
 void	init_structs(t_table *table, t_philo *philos,
 			pthread_mutex_t *forks, char **av);
-int		thread_create(t_philo *philo, t_table *table);
+int		init_threads(t_philo *philo, t_table *table);
 size_t	get_time(void);
+void	*control_routine(void *placeholder);
 
 #endif
