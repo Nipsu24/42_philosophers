@@ -6,11 +6,17 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:21:37 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/06/26 14:58:39 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/27 15:27:58 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	print_state(char *str, t_philo *philo)
+{
+	
+}
+
 
 static void	init_table(t_table *table, t_philo *philos, char **av)
 {
@@ -28,9 +34,9 @@ static void	init_table(t_table *table, t_philo *philos, char **av)
 	table->dead_flag = 0;
 
 	printf("nbr of philos: %d\n", table->nbr_of_philos);
-	printf("time_to_die: %d\n", table->time_to_die);
-	printf("time_to_eat: %d\n", table->time_to_eat);
-	printf("time_to_sleep: %d\n", table->time_to_sleep);
+	printf("time_to_die: %ld\n", table->time_to_die);
+	printf("time_to_eat: %ld\n", table->time_to_eat);
+	printf("time_to_sleep: %ld\n", table->time_to_sleep);
 	printf("meals_to eat: %d\n", table->meals_to_eat);
 	printf("start_sim: %zu\n", table->start_sim);
 }
@@ -67,7 +73,7 @@ static void	init_philo(t_philo *philo, t_table *table, pthread_mutex_t *forks)
 		else
 			philo[i].r_fork = &forks[i - 1];
 		philo[i].table = table;
-		philo[i].dead = table->dead_flag;
+		philo[i].dead = &(table->dead_flag);
 		printf("philo ID: %d\n", philo[i].id);
 		printf("last_time_eaten: %zu\n", philo[i].last_time_eaten);
 		i++;

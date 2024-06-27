@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 10:15:29 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/26 15:53:02 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/27 15:09:44 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ static void	eating(t_philo *philo)
 	cur_time = get_time() - philo->table->start_sim;
 	printf("%zu %d has taken a fork\n", cur_time, philo->id);
 	cur_time = get_time() - philo->table->start_sim;
-	// if (philo->last_time_eaten > philo->table->time_to_die)
-	// 	philo->dead = 1;
 	printf("%zu %d is eating\n", cur_time, philo->id);
 	philo->eating = 1;
 	usleep(philo->table->time_to_eat * 1000);
 	philo->last_time_eaten = get_time() - philo->table->start_sim;
 	philo->meals_eaten++;
+	philo->eating = 0;
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
-	philo->eating = 0;
 }
 
 /*usleep * 1000 as input should be in milliseconds (input of this function 
@@ -61,13 +59,13 @@ static void	*philo_routine(void *placeholder)
 	philo = (t_philo *)placeholder;
 	if (philo->id % 2 == 0)
 		usleep(500);
-	while (1)
+	while (philo->table->dead_flag == 0)
 	{
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
 	}
-	return (0);
+	return (placeholder);
 }
 
 int	init_threads(t_philo *philo, t_table *table)

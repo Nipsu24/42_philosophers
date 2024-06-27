@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/26 14:57:44 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/06/27 15:08:24 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int		nbr_of_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
+	size_t	time_to_die;
+	size_t	time_to_eat;
+	size_t	time_to_sleep;
 	int		meals_to_eat;
 	int		dead_flag;
 	size_t	start_sim;
