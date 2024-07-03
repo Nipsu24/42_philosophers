@@ -62,7 +62,7 @@ static int	check_valid_nbr(int ac, char **arr)
 	nbr5 = 0;
 	if (nbr1 <= 0 || nbr2 <= 0 || nbr3 <= 0 || nbr4 <= 0)
 		return (1);
-	if (nbr1 > 200)
+	if (nbr1 > 250)
 		return (1);
 	if (ac == 6)
 	{
@@ -75,7 +75,7 @@ static int	check_valid_nbr(int ac, char **arr)
 
 /*Checks for invalid input, that is, the arguments given are anything else than
   digits and hold certain values (first 4 nbrs are less or equal 0, more than 
-  200 philosophers for first arg).*/
+  250 philosophers for first arg).*/
 int	ft_input_check(int ac, char **arr)
 {
 	if (ft_nbr_check(arr))

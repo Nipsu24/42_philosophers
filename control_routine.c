@@ -38,21 +38,22 @@ static int	meal_over(t_table *table)
 static int	philo_died(t_table *table)
 {
 	int	i;
-	size_t	cur_time;
 
 	i = 0;
-	cur_time = 0;
 	while (i < table->nbr_of_philos)
 	{
+		//pthread_mutex_lock(&table->meal_lock);
 		if (table->philos[i].eating == 0)
 		{
-			cur_time = get_time() - table->start_sim;
-			if (table->philos[i].last_time_eaten - cur_time > table->time_to_die)
+			if (get_time() - table->philos[i].last_time_eaten >= table->time_to_die)
 			{
-				printf("%zu %d died\n", cur_time, table->philos[i].id);
+				//pthread_mutex_unlock(&table->meal_lock);
+				print_message(&table->philos[i], "died\n");
 				table->dead_flag = 1;
 				return (1);
 			}
+			// else
+			// 	pthread_mutex_unlock(&table->meal_lock);
 		}
 		i++;
 	}

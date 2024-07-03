@@ -18,7 +18,7 @@ LDFLAGS = -pthread
 SRC_DIR = ./
 OBJ_DIR = obj
 
-FILES = main.c utils.c error_check.c init.c threads.c control_routine.c
+FILES = main.c utils.c error_check.c init.c threads.c control_routine.c free_and_destroy.c
 
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -29,7 +29,7 @@ $(NAME): $(OBJ_FILES)
 	@echo "\033[32m philo has been built successfully!\033[0m"
 
 fsanitize: 
-	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -g -fsanitize=address -static-libasan 
+	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -g -fsanitize=address -static-libsan 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)philo.h | $(OBJ_DIR) 
 	$(CC) $(FLAGS) -c $< -o $@

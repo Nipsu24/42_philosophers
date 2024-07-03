@@ -13,21 +13,24 @@
 #include "philo.h"
 
 static void	eating(t_philo *philo)
-{
-	size_t	cur_time;
-	
+{	
 	pthread_mutex_lock(philo->l_fork);
-	cur_time = get_time() - philo->table->start_sim;
-	printf("%zu %d has taken a fork\n", cur_time, philo->id);
+	print_message(philo, "has taken a fork\n");
+	if (philo->table->nbr_of_philos == 1)
+	{
+		ft_usleep(philo->table->time_to_die);
+		pthread_mutex_unlock(philo->l_fork);
+		return ;
+	}
 	pthread_mutex_lock(philo->r_fork);
-	cur_time = get_time() - philo->table->start_sim;
-	printf("%zu %d has taken a fork\n", cur_time, philo->id);
-	cur_time = get_time() - philo->table->start_sim;
-	printf("%zu %d is eating\n", cur_time, philo->id);
+	print_message(philo, "has taken a fork\n");
+	print_message(philo, "is eating\n");
 	philo->eating = 1;
-	usleep(philo->table->time_to_eat * 1000);
-	philo->last_time_eaten = get_time() - philo->table->start_sim;
+	ft_usleep(philo->table->time_to_eat);
+	pthread_mutex_lock(&philo->table->meal_lock);
+	philo->last_time_eaten = get_time();
 	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->table->meal_lock);
 	philo->eating = 0;
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
@@ -37,19 +40,13 @@ static void	eating(t_philo *philo)
   takes input in microseconds)*/
 static void	sleeping(t_philo *philo)
 {
-	size_t	cur_time;
-
-	cur_time = get_time() - philo->table->start_sim;
-	printf("%zu %d is sleeping\n", cur_time, philo->id);
-	usleep(philo->table->time_to_sleep * 1000);
+	print_message(philo, "is sleeping\n");
+	ft_usleep(philo->table->time_to_sleep);
 }
 
 static void	thinking(t_philo *philo)
 {
-	size_t	cur_time;
-
-	cur_time = get_time() - philo->table->start_sim;
-	printf("%zu %d is thinking\n", cur_time, philo->id);
+	print_message(philo, "is thinking\n");
 }
 
 static void	*philo_routine(void *placeholder)
@@ -58,7 +55,7 @@ static void	*philo_routine(void *placeholder)
 
 	philo = (t_philo *)placeholder;
 	if (philo->id % 2 == 0)
-		usleep(500);
+		ft_usleep(1);
 	while (philo->table->dead_flag == 0)
 	{
 		eating(philo);
@@ -68,7 +65,7 @@ static void	*philo_routine(void *placeholder)
 	return (placeholder);
 }
 
-int	init_threads(t_philo *philo, t_table *table)
+int	init_threads(t_table *table)
 {
 	pthread_t	supervisor;
 	int			i;
@@ -78,7 +75,7 @@ int	init_threads(t_philo *philo, t_table *table)
 		return (1);
 	while (i < table->nbr_of_philos)
 	{
-		if (pthread_create(&philo[i].thread, NULL,
+		if (pthread_create(&table->philos[i].thread, NULL,
 				philo_routine, &table->philos[i]) != 0)
 			return (1);
 		i++;
@@ -88,7 +85,7 @@ int	init_threads(t_philo *philo, t_table *table)
 		return (1);
 	while (i < table->nbr_of_philos)
 	{
-		if (pthread_join(philo[i].thread, NULL) != 0)
+		if (pthread_join(table->philos[i].thread, NULL) != 0)
 			return (1);
 		i++;
 	}
