@@ -20,10 +20,13 @@ int	main(int ac, char *av[])
 		return (ft_input_error_msg(0));
 	if (ft_input_check(ac, av))
 		return (ft_input_error_msg(1));
-	printf("Correct Input received\n");
 	if (init_structs(&table, av))
 		return (free_and_error(&table));
-	init_threads(&table);
+	if (init_threads(&table))
+	{	
+		destroy_and_free(&table);
+		return (1);
+	}
 	destroy_and_free(&table);
 	return (0);
 }

@@ -25,11 +25,9 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-	pthread_mutex_t *print;
 	int				id;
 	int				eating;
 	int				meals_eaten;
-	int				*dead;
 	size_t			last_time_eaten;
 	struct s_table	*table;
 }				t_philo;
@@ -47,6 +45,7 @@ typedef struct s_table
 	pthread_mutex_t *forks;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	dead_lock;
 	t_philo			*philos;
 }				t_table;
 
@@ -62,5 +61,7 @@ int		free_and_error(t_table *table);
 void	print_message(t_philo *philo, char *str);
 void	ft_usleep(size_t ms);
 void	destroy_and_free(t_table *table);
+int		is_dead(t_philo *philo);
+int		destroy_forks(t_table *table, int i);
 
 #endif

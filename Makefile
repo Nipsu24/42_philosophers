@@ -30,6 +30,9 @@ $(NAME): $(OBJ_FILES)
 
 fsanitize: 
 	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -g -fsanitize=address -static-libsan 
+
+fthread: 
+	$(CC) -o $(NAME) $(FILES) $(LDFLAGS) -g -fsanitize=thread -static-libsan 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)philo.h | $(OBJ_DIR) 
 	$(CC) $(FLAGS) -c $< -o $@

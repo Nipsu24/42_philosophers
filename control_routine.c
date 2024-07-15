@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/*Checks if all philos ate the sufficient amount of meals. If
+  this is the case, sets dead_flag to 1 in order to end
+  simulation.*/
 static int	meal_over(t_table *table)
 {
 	int	i;
@@ -23,18 +26,41 @@ static int	meal_over(t_table *table)
 		return (0);
 	while (i < table->nbr_of_philos)
 	{
+		pthread_mutex_lock(&table->meal_lock);
 		if (table->philos[i].meals_eaten >= table->meals_to_eat)
 			all_ate++;
+		pthread_mutex_unlock(&table->meal_lock);
 		i++;
 	}
 	if (all_ate == table->nbr_of_philos)
 	{
+		pthread_mutex_lock(&table->dead_lock);
 		table->dead_flag = 1;
+		pthread_mutex_unlock(&table->dead_lock);
 		return (1);
 	}
 	return (0);
 }
+/*Helper function of philo_died function, returns 0 in case
+  philo has not managed to eat in time.*/
+static int	eaten_in_time(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->meal_lock);
+	if ((get_time() - philo->last_time_eaten >= philo->table->time_to_die)
+		&& philo->eating == 0)
+	{
+		pthread_mutex_unlock(&philo->table->meal_lock);
+		return (0);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->table->meal_lock);
+		return (1);
+	}
+}
 
+/*Checks if philo has eaten in time and if not, sets dead_flag to 1
+  after locking value with dedicated mutex.*/
 static int	philo_died(t_table *table)
 {
 	int	i;
@@ -42,24 +68,21 @@ static int	philo_died(t_table *table)
 	i = 0;
 	while (i < table->nbr_of_philos)
 	{
-		//pthread_mutex_lock(&table->meal_lock);
-		if (table->philos[i].eating == 0)
+		if (!eaten_in_time(&table->philos[i]))
 		{
-			if (get_time() - table->philos[i].last_time_eaten >= table->time_to_die)
-			{
-				//pthread_mutex_unlock(&table->meal_lock);
-				print_message(&table->philos[i], "died\n");
-				table->dead_flag = 1;
-				return (1);
-			}
-			// else
-			// 	pthread_mutex_unlock(&table->meal_lock);
+			print_message(&table->philos[i], "died\n");
+			pthread_mutex_lock(&table->dead_lock);
+			table->dead_flag = 1;
+			pthread_mutex_unlock(&table->dead_lock);
+			return (1);
 		}
 		i++;
 	}
 	return (0);
 }
 
+/*Main control_routine function with sub-routines which check whether
+  all philos have eaten their meals or any has died*/
 void	*control_routine(void *placeholder)
 {
 	t_table	*table;

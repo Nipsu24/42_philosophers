@@ -12,6 +12,10 @@
 
 #include "philo.h"
 
+/*Eating routine, uses print_message function (which has print
+  mutex in place) for writing status in terminal. Custom
+  usleep function input in milliseconds. Dedicated mutex
+  meal_lock for several shared variables.*/
 static void	eating(t_philo *philo)
 {	
 	pthread_mutex_lock(philo->l_fork);
@@ -25,30 +29,36 @@ static void	eating(t_philo *philo)
 	pthread_mutex_lock(philo->r_fork);
 	print_message(philo, "has taken a fork\n");
 	print_message(philo, "is eating\n");
-	philo->eating = 1;
 	ft_usleep(philo->table->time_to_eat);
 	pthread_mutex_lock(&philo->table->meal_lock);
+	philo->eating = 1;
 	philo->last_time_eaten = get_time();
 	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->table->meal_lock);
 	philo->eating = 0;
+	pthread_mutex_unlock(&philo->table->meal_lock);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
 }
 
-/*usleep * 1000 as input should be in milliseconds (input of this function 
-  takes input in microseconds)*/
+/*Sleeping routine, uses print_message function (which has print
+  mutex in place) for writing status in terminal. Custom
+  usleep function input in milliseconds*/
 static void	sleeping(t_philo *philo)
 {
 	print_message(philo, "is sleeping\n");
 	ft_usleep(philo->table->time_to_sleep);
 }
 
+/*Thinking routine, uses print_message function (which has print
+  mutex in place) for writing status in terminal*/
 static void	thinking(t_philo *philo)
 {
 	print_message(philo, "is thinking\n");
 }
 
+/*Main function which holds all subroutine functions of the philos.
+  Modulo operation in order to split philo in 2 groups and avoid 
+  overlaps if all start eating at the same time*/
 static void	*philo_routine(void *placeholder)
 {
 	t_philo	*philo;
@@ -56,7 +66,7 @@ static void	*philo_routine(void *placeholder)
 	philo = (t_philo *)placeholder;
 	if (philo->id % 2 == 0)
 		ft_usleep(1);
-	while (philo->table->dead_flag == 0)
+	while (!is_dead(philo))
 	{
 		eating(philo);
 		sleeping(philo);
@@ -65,6 +75,8 @@ static void	*philo_routine(void *placeholder)
 	return (placeholder);
 }
 
+/*Initialises supervisor and philo thread and links them to respective
+  functions control_routine and philo_routine*/
 int	init_threads(t_table *table)
 {
 	pthread_t	supervisor;

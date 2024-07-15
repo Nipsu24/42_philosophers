@@ -44,9 +44,8 @@ static int	ft_nbr_check(char **arr)
 }
 
 /*Checks if first 4 numbers given to program are smaller or equal 0. 
-  Additional checks, if max. amount of philosophers (200) is exceeded 
-  by first argument given. In case the optional 5th number is given to 
-  program, it is checked, whether this number is smaller than 0.*/
+  In case the optional 5th number is given to program, it is checked,
+  whether this number is smaller than 0.*/
 static int	check_valid_nbr(int ac, char **arr)
 {
 	int	nbr1;
@@ -62,8 +61,6 @@ static int	check_valid_nbr(int ac, char **arr)
 	nbr5 = 0;
 	if (nbr1 <= 0 || nbr2 <= 0 || nbr3 <= 0 || nbr4 <= 0)
 		return (1);
-	if (nbr1 > 250)
-		return (1);
 	if (ac == 6)
 	{
 		nbr5 = ft_atoi(arr[5]);
@@ -74,8 +71,7 @@ static int	check_valid_nbr(int ac, char **arr)
 }
 
 /*Checks for invalid input, that is, the arguments given are anything else than
-  digits and hold certain values (first 4 nbrs are less or equal 0, more than 
-  250 philosophers for first arg).*/
+  digits and hold certain values (first 4 nbrs are less or equal 0).*/
 int	ft_input_check(int ac, char **arr)
 {
 	if (ft_nbr_check(arr))
