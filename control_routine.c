@@ -41,6 +41,7 @@ static int	meal_over(t_table *table)
 	}
 	return (0);
 }
+
 /*Helper function of philo_died function, returns 0 in case
   philo has not managed to eat in time.*/
 static int	eaten_in_time(t_philo *philo)
