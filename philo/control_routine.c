@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:43:51 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/27 15:10:47 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 10:19:09 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	meal_over(t_table *table)
 {
 	int	i;
 	int	all_ate;
-	
+
 	i = 0;
 	all_ate = 0;
 	if (table->meals_to_eat == -1)
@@ -87,12 +87,12 @@ static int	philo_died(t_table *table)
 void	*control_routine(void *placeholder)
 {
 	t_table	*table;
-	
+
 	table = (t_table *)placeholder;
 	while (1)
 	{
 		if (meal_over(table) || philo_died(table))
-			break;
+			break ;
 	}
 	return (placeholder);
 }

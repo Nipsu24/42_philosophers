@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:58:42 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/26 12:13:15 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 10:21:21 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int ac, char *av[])
 {
 	t_table			table;
-	
+
 	if (ac < 5 || ac > 6)
 		return (ft_input_error_msg(0));
 	if (ft_input_check(ac, av))

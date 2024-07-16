@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:21:37 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/06/27 15:27:58 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 10:20:34 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	init_structs(t_table *table, char **av)
 		return (1);
 	if (init_forks(table))
 		return (1);
-	if(init_philo(table))
+	if (init_philo(table))
 		return (1);
 	return (0);
 }

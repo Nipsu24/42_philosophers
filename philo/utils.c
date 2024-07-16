@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 09:58:54 by mmeier            #+#    #+#             */
-/*   Updated: 2024/06/25 11:20:35 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 10:23:53 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	ft_atoi(const char *str)
 
 size_t	get_time(void)
 {
-	struct timeval time;
-	
+	struct timeval	time;
+
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000 + time.tv_usec / 1000));
 }
@@ -83,7 +83,7 @@ size_t	get_time(void)
 void	ft_usleep(size_t ms)
 {
 	size_t	start;
-	
+
 	start = get_time();
 	while ((get_time() - start) < ms)
 		usleep(500);
