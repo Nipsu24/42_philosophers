@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:21:37 by mariusmeier       #+#    #+#             */
-/*   Updated: 2024/07/16 10:20:34 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:49:24 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static int	init_philo(t_table *table)
 		table->philos[i].id = i + 1;
 		table->philos[i].last_time_eaten = get_time();
 		table->philos[i].meals_eaten = 0;
-		table->philos[i].eating = 0;
 		table->philos[i].l_fork = &table->forks[i];
 		if (i == 0)
 			table->philos[i].r_fork = &table->forks[table->nbr_of_philos - 1];

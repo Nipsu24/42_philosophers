@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:39:08 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/16 10:22:03 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:55:42 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	int				id;
-	int				eating;
 	int				meals_eaten;
 	size_t			last_time_eaten;
 	struct s_table	*table;

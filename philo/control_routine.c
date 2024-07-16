@@ -6,7 +6,7 @@
 /*   By: mmeier <mmeier@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 12:43:51 by mmeier            #+#    #+#             */
-/*   Updated: 2024/07/16 10:19:09 by mmeier           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:42:25 by mmeier           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static int	meal_over(t_table *table)
 static int	eaten_in_time(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->meal_lock);
-	if ((get_time() - philo->last_time_eaten >= philo->table->time_to_die)
-		&& philo->eating == 0)
+	if (get_time() - philo->last_time_eaten >= philo->table->time_to_die)
 	{
 		pthread_mutex_unlock(&philo->table->meal_lock);
 		return (0);
